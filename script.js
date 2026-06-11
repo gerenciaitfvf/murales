@@ -96,6 +96,7 @@
     /* --------------------------------------------
        FILTRADO POR CATEGORÍA
        -------------------------------------------- */
+    const filterButtons = document.querySelectorAll('[data-filter]');
     filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             const filter = btn.dataset.filter;
