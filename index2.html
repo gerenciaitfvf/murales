@@ -3,250 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mural Deportivo Interactivo</title>
-    <style>
-        /* --- ESTILOS GENERALES Y PARED --- */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4; /* Color de pared */
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .wall-container {
-            width: 90%;
-            max-width: 1200px;
-            padding: 40px;
-            background-color: #fdfdfd; /* Pared ligeramente más clara */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            position: relative;
-        }
-
-        /* Título opcional */
-        .wall-title {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-weight: 300;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* --- CONTENEDOR DEL MURAL (LA GRILLA) --- */
-        .mural-grid {
-            display: grid;
-            /* Definimos 4 columnas principales */
-            grid-template-columns: repeat(5, 1fr);
-            /* Definimos 4 filas principales con alturas específicas */
-            grid-template-rows: 150px 250px 100px 150px;
-            gap: 15px; /* Espacio entre fotos */
-        }
-
-        /* --- ESTILOS DE CADA ELEMENTO --- */
-        .mural-item {
-            background-color: #eee;
-            background-size: cover;
-            background-position: center;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #777; /* Color para el texto de marcador de posición */
-            font-size: 0.8rem;
-        }
-
-        /* Efecto al pasar el ratón */
-        .mural-item:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            z-index: 10; /* Se pone por delante */
-        }
-
-        /* --- ESTILOS ESPECÍFICOS DE LOS MARCOS DE CAMISETAS --- */
-        .jersey-frame {
-            border: 12px solid #222; /* Marco negro grueso */
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 5px 10px rgba(0,0,0,0.5);
-            background-color: #fafafa;
-            padding: 10px;
-        }
-
-        /* --- POSICIONAMIENTO DE LOS ELEMENTOS EN LA GRILLA --- */
-
-        /* Columna 1 (Izquierda) */
-        .item-1 { grid-column: 1 / 2; grid-row: 1 / 2; } /* Foto de grupo arriba izq */
-        .item-2 { grid-column: 1 / 2; grid-row: 2 / 5; } /* Columna larga de fotos */
-
-        /* Columna 2 (Medio-Izquierda) */
-        .item-3 { grid-column: 2 / 3; grid-row: 1 / 2; } /* Foto equipo arriba */
-        .item-4 { grid-column: 2 / 3; grid-row: 2 / 4; } /* Marco Camiseta Amarilla */
-        .item-5 { grid-column: 2 / 3; grid-row: 4 / 5; } /* Foto equipo abajo */
-
-        /* Columna 3 (Medio-Derecha) */
-        .item-7 { grid-column: 3 / 4; grid-row: 3 / 4; } /* Foto pequeña playa/piscina */
-        .item-8 { grid-column: 3 / 4; grid-row: 4 / 5; } /* Foto pequeña equipo */
-
-        /* Columna 4: Camiseta4 cubre columnas 3-4, encima de FOTO7, FOTO8 y FOTO9 */
-        .item-6 { grid-column: 3 / 5; grid-row: 1 / 5; z-index: 5; } /* Marco Camiseta Blanca sobre FOTO7, FOTO8 y FOTO9 */
-        .item-f9-1 { grid-column: 4 / 5; grid-row: 1 / 2; }
-        .item-f9-2 { grid-column: 4 / 5; grid-row: 2 / 3; }
-        .item-f9-3 { grid-column: 4 / 5; grid-row: 3 / 4; }
-        .item-f9-4 { grid-column: 4 / 5; grid-row: 4 / 5; }
-
-        /* Columna 5 (Derecha) */
-        .item-9 { grid-column: 5 / 6; grid-row: 1 / 2; } /* Foto equipo arriba */
-        .item-10 { grid-column: 5 / 6; grid-row: 2 / 3; } /* Jugador de fútbol */
-        .item-11 { grid-column: 5 / 6; grid-row: 3 / 5; } /* Edificio */
-
-        /* --- ESTILOS DEL MODAL (PANTALLA COMPLETA) --- */
-        .modal {
-            display: none; /* Oculto por defecto */
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal.show {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal-content {
-            max-width: 90%;
-            max-height: 90%;
-            border: 5px solid white;
-            box-shadow: 0 0 30px rgba(255,255,255,0.2);
-            border-radius: 4px;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* --- DETALLES DE PARED (EXTRA) --- */
-        .fire-alarm {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 30px;
-            height: 30px;
-            background-color: #d32f2f;
-            border-radius: 50%;
-            border: 2px solid #9a0007;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-    </style>
+    <title>Mural Vinotinto — Pared 2 — Archivo FVF</title>
+    <link rel="stylesheet" href="styles2.css">
 </head>
 <body>
 
-<div class="wall-container">
-    <div class="fire-alarm"></div> <h1 class="wall-title">Mural de Recuerdos Deportivos</h1>
+<div class="grain" aria-hidden="true"></div>
 
-    <div class="mural-grid" id="muralGrid">
-        <div class="mural-item item-1" style="background-image: url('pared1/FOTO1.png');"><span>[Foto Grupo]</span></div>
-        <div class="mural-item item-2" style="flex-direction: column; padding: 0; background: none; cursor: default; gap: 2px;">
-            <div style="flex: 1; width: 100%; background: #d4d4d4 url('pared1/FOTO5_1_.png') center/cover no-repeat;"></div>
-            <div style="flex: 1; width: 100%; background: #e0e0e0 url('pared1/FOTO5_2_.png') center/cover no-repeat;"></div>
-            <div style="flex: 1; width: 100%; background: #d4d4d4 url('pared1/FOTO5_3_.png') center/cover no-repeat;"></div>
-            <div style="flex: 1; width: 100%; background: #e0e0e0 url('pared1/FOTO5_4_.png') center/cover no-repeat;"></div>
+<header class="archive-strip" aria-hidden="true">
+    <div class="archive-strip__inner">
+        <span>F·V·F</span>
+        <span>·</span>
+        <span>FEDERACIÓN VENEZOLANA DE FÚTBOL</span>
+        <span>·</span>
+        <span>ARCHIVO HISTÓRICO</span>
+        <span>·</span>
+        <span>SALA VINOTINTO</span>
+        <span>·</span>
+        <span>EXPOSICIÓN PERMANENTE</span>
+        <span>·</span>
+        <span>PIEZAS ÚNICAS</span>
+        <span>·</span>
+        <span>F·V·F</span>
+    </div>
+</header>
+
+<div class="page-wrapper">
+
+    <header class="page-header">
+        <div class="page-header__meta page-header__meta--left">
+            <span class="meta-line">N° DE CATÁLOGO</span>
+            <span class="meta-value">FVF/MV/2026-B</span>
         </div>
 
-        <div class="mural-item item-3" style="background-image: url('pared1/FOTO2.png');"><span>[Foto Equipo]</span></div>
-        <div class="mural-item item-4 jersey-frame" style="background-image: url('pared1/Camiseta6.png');"><span>[Camiseta Amarilla]</span></div>
-        <div class="mural-item item-5" style="background-image: url('pared1/FOTO6.png');"><span>[Foto Equipo]</span></div>
+        <div class="page-header__core">
+            <p class="page-eyebrow">
+                <span class="eyebrow-mark">§</span>
+                <span>Federación Venezolana de Fútbol</span>
+                <span class="eyebrow-mark">§</span>
+            </p>
+            <h1 class="page-title">
+                <span class="title-line title-line--1">Mural</span>
+                <span class="title-line title-line--2"><em>Vinotinto</em></span>
+            </h1>
+            <div class="page-header__rule" aria-hidden="true">
+                <span class="rule-dot"></span>
+                <span class="rule-bar"></span>
+                <span class="rule-diamond">◆</span>
+                <span class="rule-bar"></span>
+                <span class="rule-dot"></span>
+            </div>
+            <p class="page-subtitle">Recuerdos deportivos &mdash; pared 2</p>
+        </div>
 
-        <div class="mural-item item-7" style="background-image: url('pared1/FOTO7.png');"><span>[Foto Pequeña]</span></div>
-        <div class="mural-item item-8" style="background-image: url('pared1/FOTO8.png');"><span>[Foto Pequeña]</span></div>
+        <div class="page-header__meta page-header__meta--right">
+            <span class="meta-line">PISO 20</span>
+            <span class="meta-value">MURAL B</span>
+        </div>
+    </header>
 
-        <div class="mural-item item-f9-1" style="background-image: url('pared1/FOTO9_1_.png');"></div>
-        <div class="mural-item item-f9-2" style="background-image: url('pared1/FOTO9_2_.png');"></div>
-        <div class="mural-item item-f9-3" style="background-image: url('pared1/FOTO9_3_.png');"></div>
-        <div class="mural-item item-f9-4" style="background-image: url('pared1/FOTO9_4_.png');"></div>
+    <aside class="margin-note margin-note--left" aria-hidden="true">
+        <span>— Inventario —</span>
+        <span>Láminas 01 / 15</span>
+        <span>Pared 2 / 2</span>
+    </aside>
 
-        <div class="mural-item item-6 jersey-frame" style="background-image: url('pared1/Camiseta4.png');"><span>[Camiseta Blanca]</span></div>
+    <aside class="margin-note margin-note--right" aria-hidden="true">
+        <span>— Soporte —</span>
+        <span>Papel baritado</span>
+        <span>Tinta pigmentada</span>
+    </aside>
 
-        <div class="mural-item item-9" style="background-image: url('pared1/foto3.png');"><span>[Foto Equipo]</span></div>
-        <div class="mural-item item-10" style="background-image: url('pared1/FOTO4.png');"><span>[Jugador]</span></div>
-        <div class="mural-item item-11" style="background-image: url('pared1/FOTO10.png');"><span>[Edificio]</span></div>
+    <main class="mural-container" id="mural">
+
+        <nav class="index-rail" aria-label="Índice de la colección">
+            <span class="index-rail__num">ii.</span>
+            <span class="index-rail__label">Quince láminas &mdash; pared 2</span>
+            <span class="index-rail__rule"></span>
+        </nav>
+
+        <div class="mural-grid">
+
+            <!-- Fila superior: foto grande + camisetas + foto -->
+
+            <figure class="panel panel-1" data-category="teams" data-plate="01" data-title="Foto grupal de equipo" data-desc="Foto grupal del equipo de fútbol de Venezuela en cancha de juego.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;01</span>
+                <img src="pared2/2FOTO1.png" alt="Foto grupal de equipo">
+            </figure>
+
+            <figure class="panel panel-2 panel-jersey" data-category="jerseys" data-plate="02" data-title="Camiseta Selección Nacional — Tricolor" data-desc="Camiseta oficial de la Selección Nacional de Venezuela con los colores de la bandera nacional.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;02</span>
+                <span class="plate-tag">PRENDA</span>
+                <img src="pared2/Camiseta10.png" alt="Camiseta Selección Nacional — Tricolor">
+            </figure>
+
+            <figure class="panel panel-3 panel-jersey" data-category="jerseys" data-plate="03" data-title="Camiseta Vinotinto — N° 23" data-desc="Camiseta vinotinto de la Selección Nacional con el número 23, utilizada en competiciones oficiales.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;03</span>
+                <span class="plate-tag">PRENDA</span>
+                <img src="pared2/Camiseta5.png" alt="Camiseta Vinotinto — N° 23">
+            </figure>
+
+            <figure class="panel panel-4" data-category="events" data-plate="04" data-title="Acción de juego" data-desc="Momento de acción durante un partido oficial de la Selección Nacional.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;04</span>
+                <img src="pared2/2FOTO4.png" alt="Acción de juego">
+            </figure>
+
+            <figure class="panel panel-5" data-category="stadiums" data-plate="05" data-title="Sede de la FVF" data-desc="Vista de la nueva sede administrativa de la Federación Venezolana de Fútbol.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;05</span>
+                <img src="pared2/2FOTO2.png" alt="Sede de la FVF">
+            </figure>
+
+            <!-- Fila media: fotos -->
+
+            <figure class="panel panel-6" data-category="teams" data-plate="06" data-title="Celebración del equipo" data-desc="Celebración de los jugadores tras un gol decisivo en partido oficial.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;06</span>
+                <img src="pared2/2FOTO3.png" alt="Celebración del equipo">
+            </figure>
+
+            <figure class="panel panel-7" data-category="teams" data-plate="07" data-title="Acción colectiva" data-desc="Jugada colectiva de la Selección Nacional en partido de clasificación.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;07</span>
+                <img src="pared2/2FOTO5.png" alt="Acción colectiva">
+            </figure>
+
+            <figure class="panel panel-8" data-category="events" data-plate="08" data-title="Entrega de premios" data-desc="Ceremonia de entrega de premios en torneo oficial de la CONMEBOL.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;08</span>
+                <img src="pared2/2FOTO6.png" alt="Entrega de premios">
+            </figure>
+
+            <figure class="panel panel-9 panel-jersey" data-category="jerseys" data-plate="09" data-title="Camiseta histórica" data-desc="Camiseta histórica de la Selección Nacional utilizada en competiciones internacionales.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;09</span>
+                <span class="plate-tag">PRENDA</span>
+                <img src="pared2/Camiseta3.jpg" alt="Camiseta histórica">
+            </figure>
+
+            <figure class="panel panel-10" data-category="teams" data-plate="10" data-title="Acción individual" data-desc="Jugador de la Selección Nacional en acción durante partido oficial.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;10</span>
+                <img src="pared2/2FOTO7_1_.png" alt="Acción individual">
+            </figure>
+
+            <figure class="panel panel-11" data-category="events" data-plate="11" data-title="Momento de juego" data-desc="Momento destacado durante un partido de la Vinotinto.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;11</span>
+                <img src="pared2/2FOTO9.png" alt="Momento de juego">
+            </figure>
+
+            <!-- Fila inferior: stacks y fotos -->
+
+            <figure class="panel panel-12 panel-stack" data-category="events" data-plate="12" data-title="Secuencia de clasificación — 2023" data-desc="Imágenes de la clasificación de la Selección Sub-20 a la Copa Mundial de la FIFA.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;12</span>
+                <span class="plate-tag plate-tag--alt">SECUENCIA · 1</span>
+                <div class="stack-item" style="background-image:url('pared2/2FOTO7_1_.png')"></div>
+                <div class="stack-item" style="background-image:url('pared2/2FOTO7_2_.png')"></div>
+            </figure>
+
+            <figure class="panel panel-13 panel-stack" data-category="events" data-plate="13" data-title="Secuencia de clasificación — 2025" data-desc="Imágenes de la clasificación de la Selección al Mundial Sub-17 Qatar 2025.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;13</span>
+                <span class="plate-tag plate-tag--alt">SECUENCIA · 2</span>
+                <div class="stack-item" style="background-image:url('pared2/2FOTO10_1_.png')"></div>
+                <div class="stack-item" style="background-image:url('pared2/2FOTO10_2_.png')"></div>
+            </figure>
+
+            <figure class="panel panel-14" data-category="teams" data-plate="14" data-title="Foto de equipo" data-desc="Foto oficial del equipo de la Selección Nacional de Venezuela.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;14</span>
+                <img src="pared2/2FOTO11.png" alt="Foto de equipo">
+            </figure>
+
+            <figure class="panel panel-15" data-category="events" data-plate="15" data-title="Anotación complementaria" data-desc="Placa complementaria del mural 2.">
+                <span class="plate-number" aria-hidden="true">N°&nbsp;15</span>
+                <img src="pared2/2FOTO4.png" alt="Anotación complementaria">
+            </figure>
+
+        </div>
+
+        <footer class="archive-footer">
+            <div class="archive-footer__col archive-footer__col--left">
+                <span class="footer-key">Acervo</span>
+                <span class="footer-val">Federación Venezolana de Fútbol</span>
+            </div>
+            <div class="archive-footer__col archive-footer__col--center">
+                <span class="footer-ornament">❦</span>
+            </div>
+            <div class="archive-footer__col archive-footer__col--right">
+                <span class="footer-key">Edición</span>
+                <span class="footer-val">MMXXIV &mdash;</span>
+            </div>
+        </footer>
+
+    </main>
+
+</div>
+
+<footer class="archive-strip archive-strip--bottom" aria-hidden="true">
+    <div class="archive-strip__inner">
+        <span>F·V·F</span>
+        <span>·</span>
+        <span>PATRIMONIO DEPORTIVO NACIONAL</span>
+        <span>·</span>
+        <span>CONSERVAR · EXHIBIR · TRANSMITIR</span>
+        <span>·</span>
+        <span>PISO 20 · MURAL B</span>
+        <span>·</span>
+        <span>PIEZAS ÚNICAS</span>
+        <span>·</span>
+        <span>F·V·F</span>
     </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar vista ampliada">&times;</button>
+    <figure class="lightbox-content">
+        <div class="lightbox-frame">
+            <span class="lightbox-plate" id="lightboxPlate"></span>
+            <img id="lightboxImg" src="" alt="">
+        </div>
+        <figcaption>
+            <p class="lightbox-eyebrow" id="lightboxEyebrow">Placa del archivo</p>
+            <h2 id="lightboxTitle"></h2>
+            <p id="lightboxDesc"></p>
+        </figcaption>
+    </figure>
 </div>
 
-<div class="modal" id="imageModal">
-    <span class="close-modal" id="closeModal">&times;</span>
-    <img class="modal-content" id="modalImage">
-</div>
-
-<script>
-    // --- LÓGICA DEL MODAL INTERACTIVO ---
-
-    const grid = document.getElementById('muralGrid');
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage');
-    const closeBtn = document.getElementById('closeModal');
-
-    // Añadir evento de clic a todo el mural
-    grid.addEventListener('click', function(e) {
-        // Encontrar el elemento 'mural-item' más cercano al clic (por si se clica en el texto)
-        const item = e.target.closest('.mural-item');
-        
-        if (item) {
-            // Obtener la URL de la imagen de fondo
-            const bgImage = window.getComputedStyle(item).backgroundImage;
-            
-            // Limpiar la URL (quitar 'url("...")')
-            const imageUrl = bgImage.replace(/^url\(['"](.+)['"]\)$/, '$1');
-            
-            // Si hay una imagen (y no es el texto de marcador)
-            if (imageUrl && imageUrl !== 'none' && !imageUrl.includes('undefined')) {
-                modal.classList.add('show');
-                modalImg.src = imageUrl;
-            } else {
-                console.log("No hay imagen real definida para este elemento.");
-                // Opcional: mostrar un mensaje o simplemente no hacer nada.
-            }
-        }
-    });
-
-    // Cerrar el modal al hacer clic en la 'X'
-    closeBtn.addEventListener('click', function() {
-        modal.classList.remove('show');
-    });
-
-    // Cerrar el modal al hacer clic fuera de la imagen
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.classList.remove('show');
-        }
-    });
-
-    // Cerrar el modal al pulsar la tecla ESC
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('show')) {
-            modal.classList.remove('show');
-        }
-    });
-</script>
-
+<script src="script.js"></script>
 </body>
-</html>en
+</html>
