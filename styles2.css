@@ -559,7 +559,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .panel-2   { grid-column: 3 / span 2;  grid-row: 1 / span 4; }   /* 2FOTO2 — sede FVF */
 .panel-3   { grid-column: 5 / span 2;  grid-row: 1 / span 4; }   /* 2FOTO3 — celebración */
 .panel-4   { grid-column: 7 / span 3;  grid-row: 1 / span 6; }   /* Camiseta10 — camiseta blanca tricolor */
-.panel-5   { grid-column: 10 / span 3; grid-row: 1 / span 6; }   /* Camiseta5 — camiseta vinotinto #23 */
+.panel-5   { grid-column: 10 / span 3; grid-row: 1 / span 3; }   /* 2FOTO4 — más pequeña */
 
 /* Fila media */
 .panel-6   { grid-column: 1 / span 2;  grid-row: 5 / span 3; }   /* 2FOTO4 */
@@ -570,10 +570,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .panel-11  { grid-column: 11 / span 2; grid-row: 7 / span 2; }   /* 2FOTO9 */
 
 /* Fila inferior — stacks y fotos */
-.panel-12  { grid-column: 7 / span 3;  grid-row: 7 / span 3; }   /* Stack: 2FOTO7_1 + 2FOTO7_2 — debajo de panel 4 */
+.panel-12  { grid-column: 10 / span 3; grid-row: 4 / span 3; }   /* Stack: 2FOTO7_1 + 2FOTO7_2 — debajo de panel 5 */
 .panel-13  { grid-column: 4 / span 3;  grid-row: 8 / span 4; }   /* Stack: 2FOTO10_1 + 2FOTO10_2 */
 .panel-14  { grid-column: 7 / span 3;  grid-row: 10 / span 3; }  /* 2FOTO11 — debajo de secuencia 1 */
-.panel-15  { grid-column: 10 / span 3; grid-row: 9 / span 3; }   /* 2FOTO extra */
+.panel-15  { grid-column: 10 / span 3; grid-row: 7 / span 3; }   /* 2FOTO extra — debajo de secuencia 1 */
 
 /* ============================================
    PIE EDITORIAL
