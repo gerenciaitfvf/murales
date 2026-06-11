@@ -563,8 +563,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 
 /* Fila media */
 .panel-6   { grid-column: 1 / span 2;  grid-row: 5 / span 3; }   /* 2FOTO4 */
-.panel-7   { grid-column: 3 / span 2;  grid-row: 5 / span 3; }   /* 2FOTO5 */
-.panel-8   { grid-column: 1 / span 2;  grid-row: 9 / span 2; }   /* 2FOTO6 — a la izquierda de secuencia 2 */
+.panel-7   { grid-column: 1 / span 2;  grid-row: 10 / span 2; }  /* 2FOTO5 — debajo de 15, izq de 13, sobre 14 */
+.panel-8   { grid-column: 1 / span 2;  grid-row: 8 / span 2; }   /* 2FOTO6 — debajo de panel 6 */
 .panel-9   { grid-column: 7 / span 3;  grid-row: 7 / span 6; }   /* Camiseta10 — debajo de panel 4, mismo tamaño */
 .panel-11  { grid-column: 11 / span 2; grid-row: 7 / span 2; }   /* 2FOTO9 */
 
@@ -572,7 +572,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .panel-12  { grid-column: 10 / span 3; grid-row: 4 / span 3; }   /* Stack: 2FOTO7_1 + 2FOTO7_2 — debajo de panel 5 */
 .panel-15  { grid-column: 3 / span 4;  grid-row: 5 / span 4; }  /* Camiseta5 — arriba */
 .panel-13  { grid-column: 3 / span 4;  grid-row: 9 / span 4; }  /* Stack: 2FOTO10 — debajo de panel 15 */
-.panel-14  { grid-column: 1 / span 2;  grid-row: 11 / span 2; }  /* 2FOTO11 — a la izquierda de secuencia 2 */
+.panel-14  { grid-column: 1 / span 2;  grid-row: 12 / span 2; }  /* 2FOTO11 — debajo de panel 7 */
 
 /* ============================================
    PIE EDITORIAL
