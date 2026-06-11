@@ -565,15 +565,14 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .panel-6   { grid-column: 1 / span 2;  grid-row: 5 / span 3; }   /* 2FOTO4 */
 .panel-7   { grid-column: 3 / span 2;  grid-row: 5 / span 3; }   /* 2FOTO5 */
 .panel-8   { grid-column: 5 / span 2;  grid-row: 5 / span 3; }   /* 2FOTO6 */
-.panel-9   { grid-column: 7 / span 2;  grid-row: 7 / span 2; }   /* Camiseta3 */
-.panel-10  { grid-column: 9 / span 2;  grid-row: 7 / span 2; }   /* 2FOTO7_1_ */
+.panel-9   { grid-column: 7 / span 3;  grid-row: 7 / span 6; }   /* Camiseta10 — debajo de panel 4, mismo tamaño */
 .panel-11  { grid-column: 11 / span 2; grid-row: 7 / span 2; }   /* 2FOTO9 */
 
 /* Fila inferior — stacks y fotos */
 .panel-12  { grid-column: 10 / span 3; grid-row: 4 / span 3; }   /* Stack: 2FOTO7_1 + 2FOTO7_2 — debajo de panel 5 */
 .panel-13  { grid-column: 4 / span 3;  grid-row: 8 / span 4; }   /* Stack: 2FOTO10_1 + 2FOTO10_2 */
 .panel-14  { grid-column: 10 / span 3; grid-row: 7 / span 3; }  /* 2FOTO11 — debajo de secuencia 1 */
-.panel-15  { grid-column: 3 / span 4;  grid-row: 5 / span 4; }  /* Camiseta5 — debajo de placas 2 y 3 */
+.panel-15  { grid-column: 3 / span 4;  grid-row: 5 / span 6; }  /* Camiseta5 — mismo tamaño que panel 4 */
 
 /* ============================================
    PIE EDITORIAL
@@ -772,8 +771,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .panel-7  { animation-delay: 0.50s; }
 .panel-8  { animation-delay: 0.55s; }
 .panel-9  { animation-delay: 0.60s; }
-.panel-10 { animation-delay: 0.65s; }
-.panel-11 { animation-delay: 0.70s; }
+.panel-11 { animation-delay: 0.65s; }
 .panel-12 { animation-delay: 0.75s; }
 .panel-13 { animation-delay: 0.80s; }
 .panel-14 { animation-delay: 0.85s; }
@@ -825,7 +823,6 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .panel-7   { grid-column: 4 / span 3; grid-row: 13 / span 3; }
     .panel-8   { grid-column: 1 / span 2; grid-row: 16 / span 2; }
     .panel-9   { grid-column: 3 / span 2; grid-row: 16 / span 2; }
-    .panel-10  { grid-column: 5 / span 2; grid-row: 16 / span 2; }
     .panel-11  { grid-column: 1 / span 6; grid-row: 18 / span 2; }
     .panel-12  { grid-column: 4 / span 3; grid-row: 20 / span 4; }
     .panel-13  { grid-column: 1 / span 3; grid-row: 20 / span 4; }
@@ -850,8 +847,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 
     .panel,
     .panel-1, .panel-2, .panel-3, .panel-4, .panel-5,
-    .panel-6, .panel-7, .panel-8, .panel-9, .panel-10,
-    .panel-11, .panel-12, .panel-13, .panel-14, .panel-15 {
+    .panel-6, .panel-7, .panel-8, .panel-9, .panel-11,
+    .panel-12, .panel-13, .panel-14, .panel-15 {
         grid-column: auto;
         grid-row: auto;
         width: 100%;
