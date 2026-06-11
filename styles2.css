@@ -554,18 +554,18 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
    - Fila inferior: fotos + stacks
    ============================================ */
 
-/* Fila superior */
-.panel-1   { grid-column: 1 / span 4;  grid-row: 1 / span 4; }   /* 2FOTO1 — foto grande grupo */
-.panel-2   { grid-column: 5 / span 4;  grid-row: 1 / span 6; }   /* Camiseta10 — camiseta blanca tricolor */
-.panel-3   { grid-column: 9 / span 4;  grid-row: 1 / span 6; }   /* Camiseta5 — camiseta vinotinto #23 */
-.panel-4   { grid-column: 5 / span 2;  grid-row: 1 / span 2; }   /* 2FOTO4 — foto small sobre camiseta */
-.panel-5   { grid-column: 11 / span 2; grid-row: 1 / span 2; }   /* 2FOTO2 — foto edificio */
+/* Fila superior: 3 fotos + 2 camisetas */
+.panel-1   { grid-column: 1 / span 2;  grid-row: 1 / span 4; }   /* 2FOTO1 — foto grande grupo */
+.panel-2   { grid-column: 3 / span 2;  grid-row: 1 / span 4; }   /* 2FOTO2 — sede FVF */
+.panel-3   { grid-column: 5 / span 2;  grid-row: 1 / span 4; }   /* 2FOTO3 — celebración */
+.panel-4   { grid-column: 7 / span 3;  grid-row: 1 / span 6; }   /* Camiseta10 — camiseta blanca tricolor */
+.panel-5   { grid-column: 10 / span 3; grid-row: 1 / span 6; }   /* Camiseta5 — camiseta vinotinto #23 */
 
 /* Fila media */
-.panel-6   { grid-column: 1 / span 2;  grid-row: 5 / span 3; }   /* 2FOTO3 */
+.panel-6   { grid-column: 1 / span 2;  grid-row: 5 / span 3; }   /* 2FOTO4 */
 .panel-7   { grid-column: 3 / span 2;  grid-row: 5 / span 3; }   /* 2FOTO5 */
-.panel-8   { grid-column: 5 / span 2;  grid-row: 7 / span 2; }   /* 2FOTO6 */
-.panel-9   { grid-column: 7 / span 2;  grid-row: 7 / span 2; }   /* Camiseta3 — camiseta adicional */
+.panel-8   { grid-column: 5 / span 2;  grid-row: 5 / span 3; }   /* 2FOTO6 */
+.panel-9   { grid-column: 7 / span 2;  grid-row: 7 / span 2; }   /* Camiseta3 */
 .panel-10  { grid-column: 9 / span 2;  grid-row: 7 / span 2; }   /* 2FOTO7_1_ */
 .panel-11  { grid-column: 11 / span 2; grid-row: 7 / span 2; }   /* 2FOTO9 */
 
