@@ -570,9 +570,9 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .panel-11  { grid-column: 11 / span 2; grid-row: 7 / span 2; }   /* 2FOTO9 */
 
 /* Fila inferior — stacks y fotos */
-.panel-12  { grid-column: 1 / span 3;  grid-row: 8 / span 4; }   /* Stack: 2FOTO7_1 + 2FOTO7_2 */
+.panel-12  { grid-column: 7 / span 3;  grid-row: 7 / span 3; }   /* Stack: 2FOTO7_1 + 2FOTO7_2 — debajo de panel 4 */
 .panel-13  { grid-column: 4 / span 3;  grid-row: 8 / span 4; }   /* Stack: 2FOTO10_1 + 2FOTO10_2 */
-.panel-14  { grid-column: 7 / span 3;  grid-row: 9 / span 3; }   /* 2FOTO11 */
+.panel-14  { grid-column: 7 / span 3;  grid-row: 10 / span 3; }  /* 2FOTO11 — debajo de secuencia 1 */
 .panel-15  { grid-column: 10 / span 3; grid-row: 9 / span 3; }   /* 2FOTO extra */
 
 /* ============================================
@@ -827,10 +827,10 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
     .panel-9   { grid-column: 3 / span 2; grid-row: 16 / span 2; }
     .panel-10  { grid-column: 5 / span 2; grid-row: 16 / span 2; }
     .panel-11  { grid-column: 1 / span 6; grid-row: 18 / span 2; }
-    .panel-12  { grid-column: 1 / span 2; grid-row: 20 / span 4; }
-    .panel-13  { grid-column: 3 / span 2; grid-row: 20 / span 4; }
-    .panel-14  { grid-column: 5 / span 2; grid-row: 20 / span 4; }
-    .panel-15  { grid-column: 1 / span 6; grid-row: 24 / span 2; }
+    .panel-12  { grid-column: 4 / span 3; grid-row: 20 / span 4; }
+    .panel-13  { grid-column: 1 / span 3; grid-row: 20 / span 4; }
+    .panel-14  { grid-column: 4 / span 3; grid-row: 24 / span 4; }
+    .panel-15  { grid-column: 1 / span 6; grid-row: 28 / span 2; }
 }
 
 /* ============================================
