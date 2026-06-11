@@ -572,8 +572,8 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 /* Fila inferior — stacks y fotos */
 .panel-12  { grid-column: 10 / span 3; grid-row: 4 / span 3; }   /* Stack: 2FOTO7_1 + 2FOTO7_2 — debajo de panel 5 */
 .panel-13  { grid-column: 4 / span 3;  grid-row: 8 / span 4; }   /* Stack: 2FOTO10_1 + 2FOTO10_2 */
-.panel-14  { grid-column: 7 / span 3;  grid-row: 10 / span 3; }  /* 2FOTO11 — debajo de secuencia 1 */
-.panel-15  { grid-column: 10 / span 3; grid-row: 7 / span 3; }   /* 2FOTO extra — debajo de secuencia 1 */
+.panel-14  { grid-column: 10 / span 3; grid-row: 7 / span 3; }  /* 2FOTO11 — debajo de secuencia 1 */
+.panel-15  { grid-column: 3 / span 4;  grid-row: 5 / span 4; }  /* Camiseta5 — debajo de placas 2 y 3 */
 
 /* ============================================
    PIE EDITORIAL
