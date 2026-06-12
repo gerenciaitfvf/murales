@@ -124,7 +124,7 @@
         lightboxDesc.textContent = panel.dataset.desc || '';
         lightboxPlate.textContent = panel.dataset.plate
             ? 'Placa N° ' + panel.dataset.plate
-            : 'Placa del archivo';
+            : '';
 
         lightbox.classList.add('is-open');
         lightbox.setAttribute('aria-hidden', 'false');
