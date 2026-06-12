@@ -966,31 +966,45 @@ button {
 
     .margin-note { display: none; }
 
-    /* En tablet pasamos a una rejilla de 6 columnas con filas
-       explícitas no superpuestas: cada panel ocupa su propia
-       banda horizontal sin pisar al vecino. */
+    /* En tablet apilamos todo en una columna para que cada imagen
+       quede una debajo de la otra, sin superposiciones. */
     .mural-grid {
-        grid-template-columns: repeat(6, 1fr);
-        grid-auto-rows: 70px;
+        display: flex;
+        flex-direction: column;
         gap: 10px;
     }
 
-    .panel-1   { grid-column: 1 / span 3; grid-row: 1  / span 3; }
-    .panel-2   { grid-column: 4 / span 3; grid-row: 1  / span 3; }
-    .panel-3   { grid-column: 1 / span 3; grid-row: 4  / span 5; }
-    .panel-4   { grid-column: 4 / span 3; grid-row: 4  / span 3; }
-    .panel-5   { grid-column: 1 / span 2; grid-row: 9  / span 6; }
-    .panel-6   { grid-column: 3 / span 4; grid-row: 9  / span 5; }
-    .panel-7   { grid-column: 1 / span 6; grid-row: 15 / span 2; }
-    .panel-8   { grid-column: 4 / span 3; grid-row: 7  / span 2; }
-    .panel-9   { grid-column: 1 / span 3; grid-row: 17 / span 2; }
-    .panel-10  { grid-column: 4 / span 3; grid-row: 17 / span 2; }
-    .panel-11  { grid-column: 1 / span 6; grid-row: 19 / span 2; }
+    .panel,
+    .panel-1, .panel-2, .panel-3, .panel-4, .panel-5,
+    .panel-6, .panel-7, .panel-8, .panel-9, .panel-10, .panel-11,
+    .panel-extra-1, .panel-extra-stack {
+        grid-column: auto;
+        grid-row: auto;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+    }
 
-    .panel-extra-stack {
-        grid-column: 1 / span 6;
-        grid-row: 21 / span 5;
-        flex-direction: row;
+    .panel img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 14px;
+    }
+
+    .panel-jersey { aspect-ratio: 3 / 4; }
+
+    .panel-stack {
+        aspect-ratio: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        height: auto;
+    }
+    .panel-stack .stack-item {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        background-size: contain;
     }
 }
 
