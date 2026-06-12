@@ -14,6 +14,65 @@
     const panels = document.querySelectorAll('.panel');
 
     /* --------------------------------------------
+       WEBP SUPPORT DETECTION
+       -------------------------------------------- */
+    function supportsWebP() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1;
+        canvas.height = 1;
+        return canvas.toDataURL('image/webp').indexOf('image/webp') === 0;
+    }
+
+    const webpSupported = supportsWebP();
+
+    function toWebP(src) {
+        if (!webpSupported) return src;
+        // Replace .png or .jpg with .webp
+        return src.replace(/\.(png|jpg|jpeg)$/i, '.webp');
+    }
+
+    /* --------------------------------------------
+       LAZY LOADING + WEBP CONVERSION
+       -------------------------------------------- */
+    function optimizeImages() {
+        // Convertir <img> a WebP si el navegador lo soporta
+        document.querySelectorAll('.panel img').forEach(img => {
+            // Add lazy loading
+            if (!img.hasAttribute('loading')) {
+                img.setAttribute('loading', 'lazy');
+            }
+            // Swap to WebP
+            if (webpSupported && img.src) {
+                const webpSrc = toWebP(img.getAttribute('src'));
+                // Test if webp exists by attempting to load
+                const test = new Image();
+                test.onload = function() { img.src = webpSrc; };
+                test.onerror = function() { /* keep png */ };
+                test.src = webpSrc;
+            }
+        });
+
+        // Convertir stack-item background-image a WebP
+        document.querySelectorAll('.stack-item').forEach(item => {
+            const bg = item.style.backgroundImage;
+            if (webpSupported && bg) {
+                const match = bg.match(/url\(['"]?(.+?\.(?:png|jpg|jpeg))['"]?\)/i);
+                if (match) {
+                    const webpUrl = toWebP(match[1]);
+                    item.style.backgroundImage = `url('${webpUrl}')`;
+                }
+            }
+        });
+    }
+
+    // Run optimization after DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', optimizeImages);
+    } else {
+        optimizeImages();
+    }
+
+    /* --------------------------------------------
        LIGHTBOX
        -------------------------------------------- */
     function openLightbox(panel) {
@@ -23,7 +82,8 @@
         const stackItem = panel.querySelector('.stack-item');
 
         if (img) {
-            lightboxImg.src = img.src;
+            // Use the current (possibly WebP) src
+            lightboxImg.src = img.currentSrc || img.src;
             lightboxImg.alt = img.alt;
         } else if (stackItem) {
             const bg = window.getComputedStyle(stackItem).backgroundImage;
