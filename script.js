@@ -10,8 +10,15 @@
     const lightboxTitle = document.getElementById('lightboxTitle');
     const lightboxDesc = document.getElementById('lightboxDesc');
     const lightboxPlate = document.getElementById('lightboxPlate');
+    const lightboxCounter = document.getElementById('lightboxCounter');
     const lightboxClose = document.getElementById('lightboxClose');
+    const lightboxPrev = document.getElementById('lightboxPrev');
+    const lightboxNext = document.getElementById('lightboxNext');
     const panels = document.querySelectorAll('.panel');
+
+    // Estado del lightbox para navegación de secuencias
+    let lightboxImages = [];
+    let lightboxIndex = 0;
 
     /* --------------------------------------------
        WEBP SUPPORT DETECTION
@@ -27,7 +34,6 @@
 
     function toWebP(src) {
         if (!webpSupported) return src;
-        // Replace .png or .jpg with .webp
         return src.replace(/\.(png|jpg|jpeg)$/i, '.webp');
     }
 
@@ -35,16 +41,12 @@
        LAZY LOADING + WEBP CONVERSION
        -------------------------------------------- */
     function optimizeImages() {
-        // Convertir <img> a WebP si el navegador lo soporta
         document.querySelectorAll('.panel img').forEach(img => {
-            // Add lazy loading
             if (!img.hasAttribute('loading')) {
                 img.setAttribute('loading', 'lazy');
             }
-            // Swap to WebP
             if (webpSupported && img.src) {
                 const webpSrc = toWebP(img.getAttribute('src'));
-                // Test if webp exists by attempting to load
                 const test = new Image();
                 test.onload = function() { img.src = webpSrc; };
                 test.onerror = function() { /* keep png */ };
@@ -52,7 +54,6 @@
             }
         });
 
-        // Convertir stack-item background-image a WebP
         document.querySelectorAll('.stack-item').forEach(item => {
             const bg = item.style.backgroundImage;
             if (webpSupported && bg) {
@@ -65,7 +66,6 @@
         });
     }
 
-    // Run optimization after DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', optimizeImages);
     } else {
@@ -75,25 +75,50 @@
     /* --------------------------------------------
        LIGHTBOX
        -------------------------------------------- */
-    function openLightbox(panel) {
-        // Resuelve la imagen a mostrar: usa el <img> si existe,
-        // o el primer background-image de un stack-item (secuencias).
-        const img = panel.querySelector('img');
-        const stackItem = panel.querySelector('.stack-item');
+    function extractBgUrl(bgValue) {
+        if (!bgValue || bgValue === 'none') return null;
+        const match = bgValue.match(/url\(['"]?(.+?)['"]?\)/);
+        return match ? match[1] : null;
+    }
 
-        if (img) {
-            // Use the current (possibly WebP) src
-            lightboxImg.src = img.currentSrc || img.src;
-            lightboxImg.alt = img.alt;
-        } else if (stackItem) {
-            const bg = window.getComputedStyle(stackItem).backgroundImage;
-            const match = bg.match(/url\(['"]?(.+?)['"]?\)/);
-            if (!match) return;
-            lightboxImg.src = match[1];
-            lightboxImg.alt = panel.dataset.title || '';
-        } else {
-            return;
+    function buildImageList(panel) {
+        // Si el panel es una secuencia, junta todos los stack-items
+        const stackItems = panel.querySelectorAll('.stack-item');
+        if (stackItems.length > 0) {
+            const urls = [];
+            stackItems.forEach(item => {
+                const url = extractBgUrl(item.style.backgroundImage);
+                if (url) urls.push(url);
+            });
+            return urls;
         }
+        // Si tiene un <img>, usa solo esa imagen
+        const img = panel.querySelector('img');
+        if (img) return [img.currentSrc || img.src];
+        return [];
+    }
+
+    function showImage(index) {
+        if (index < 0 || index >= lightboxImages.length) return;
+        lightboxIndex = index;
+        lightboxImg.src = lightboxImages[index];
+        if (lightboxImages.length > 1) {
+            lightboxCounter.textContent = (index + 1) + ' / ' + lightboxImages.length;
+            lightboxCounter.hidden = false;
+            lightboxPrev.hidden = false;
+            lightboxNext.hidden = false;
+        } else {
+            lightboxCounter.hidden = true;
+            lightboxPrev.hidden = true;
+            lightboxNext.hidden = true;
+        }
+    }
+
+    function openLightbox(panel) {
+        lightboxImages = buildImageList(panel);
+        if (lightboxImages.length === 0) return;
+
+        showImage(0);
 
         lightboxTitle.textContent = panel.dataset.title || '';
         lightboxDesc.textContent = panel.dataset.desc || '';
@@ -110,6 +135,18 @@
         lightbox.classList.remove('is-open');
         lightbox.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+    }
+
+    function navigatePrev() {
+        if (lightboxImages.length < 2) return;
+        const newIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
+        showImage(newIndex);
+    }
+
+    function navigateNext() {
+        if (lightboxImages.length < 2) return;
+        const newIndex = (lightboxIndex + 1) % lightboxImages.length;
+        showImage(newIndex);
     }
 
     /* --------------------------------------------
@@ -139,18 +176,21 @@
     }
 
     /* --------------------------------------------
-       CIERRE DEL LIGHTBOX
+       CIERRE Y NAVEGACIÓN DEL LIGHTBOX
        -------------------------------------------- */
     lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', e => { e.stopPropagation(); navigatePrev(); });
+    lightboxNext.addEventListener('click', e => { e.stopPropagation(); navigateNext(); });
 
     lightbox.addEventListener('click', e => {
         if (e.target === lightbox) closeLightbox();
     });
 
     document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
-            closeLightbox();
-        }
+        if (!lightbox.classList.contains('is-open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') navigatePrev();
+        if (e.key === 'ArrowRight') navigateNext();
     });
 
     /* --------------------------------------------
